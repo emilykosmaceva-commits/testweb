@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <title>Datu apjoma aprēķins</title>
+    <style>
+body {
+    font-family: Arial;
+}
+
+.form-container {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid black;
+    max-width: 400px;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.radio-group {
+    margin-bottom: 5px;
+}
+
+.radio-group label {
+    margin-right: 10px;
+}
+.form-container {
+    border: 1px solid black;
+    padding: 10px;
+    width: 400px;
+}
+
+.line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+input[type="text"] {
+    flex: 1;
+}
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <!-- 13. uzdevums: Formas izveide -->
+        <p>Aprēķināt cik daudz informācijas var lejupielādēt</p>
+        <input type="number" id="sekundes" placeholder="Ievadiet sekundes"> 
+        <span>sekundēs, ja interneta ātrums ir 25 Mbps.</span>
+
+        <p>Atbilde</p>
+        <input type="text" id="atbilde" readonly>
+
+        <input type="radio" name="unit" id="kib" onclick="rekinat()"> 
+        <label for="kib">KiB</label>
+        
+        <input type="radio" name="unit" id="kb" onclick="rekinat()"> 
+        <label for="kb">KB</label>
+    </div>
+
+    <script>
+        const lauksSekundes = document.getElementById('sekundes');
+        const lauksAtbilde = document.getElementById('atbilde');
+        const radioKiB = document.getElementById('kib');
+        const radioKB = document.getElementById('kb');
+
+        function rekinat() {
+            const s = parseFloat(lauksSekundes.value);
+            
+            if (isNaN(s)) return;
+            const kopējieBiti = s * 25000000;
+            const kopējieBaiti = kopējieBiti / 8;
+
+            if (radioKB.checked) {
+                lauksAtbilde.value = kopējieBaiti / 1000;
+            } else if (radioKiB.checked) {
+                lauksAtbilde.value = kopējieBaiti / 1024;
+            }
+        }
+        lauksSekundes.onfocus = function() {
+            lauksSekundes.value = "";
+            lauksAtbilde.value = "";
+            radioKiB.checked = false;
+            radioKB.checked = false;
+        };
+    </script>
+
+</body>
+</html>
